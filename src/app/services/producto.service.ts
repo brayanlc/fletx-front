@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Producto, CreateProductoRequest, UpdateProductoRequest } from '../models/producto.model';
@@ -8,9 +8,9 @@ import { AuthService } from './auth.service';
   providedIn: 'root'
 })
 export class ProductoService {
-  private apiUrl = 'http://localhost:3000/api/productos';
+  private http = inject(HttpClient);
 
-  constructor(private http: HttpClient) {}
+  private apiUrl = 'http://localhost:3000/api/productos';
 
   getAll(): Observable<Producto[]> {
     return this.http.get<Producto[]>(this.apiUrl);

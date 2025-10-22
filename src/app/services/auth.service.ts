@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -8,11 +8,13 @@ import { User, LoginRequest, RegisterRequest, AuthResponse } from '../models/use
   providedIn: 'root'
 })
 export class AuthService {
+  private http = inject(HttpClient);
+
   private apiUrl = 'http://localhost:3000/api/auth';
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
 
-  constructor(private http: HttpClient) {
+  constructor() {
     // Verificar si hay token guardado al inicializar
     const token = localStorage.getItem('token');
     if (token) {

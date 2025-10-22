@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { ProductoService } from '../../services/producto.service';
@@ -12,16 +12,14 @@ import { Producto } from '../../models/producto.model';
   styleUrl: './productos.scss'
 })
 export class ProductosComponent implements OnInit {
+  private productoService = inject(ProductoService);
+  private authService = inject(AuthService);
+  private router = inject(Router);
+
   productos: Producto[] = [];
   isLoading: boolean = false;
   errorMessage: string = '';
   currentUser: any = null;
-
-  constructor(
-    private productoService: ProductoService,
-    private authService: AuthService,
-    private router: Router
-  ) {}
 
   ngOnInit(): void {
     this.currentUser = this.authService.getCurrentUser();

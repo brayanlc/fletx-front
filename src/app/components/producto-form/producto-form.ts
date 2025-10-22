@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 
 import { FormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterModule } from '@angular/router';
@@ -12,6 +12,10 @@ import { Producto, CreateProductoRequest, UpdateProductoRequest } from '../../mo
   styleUrl: './producto-form.scss'
 })
 export class ProductoFormComponent implements OnInit {
+  private productoService = inject(ProductoService);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+
   producto: CreateProductoRequest = {
     nombre: '',
     descripcion: '',
@@ -22,12 +26,6 @@ export class ProductoFormComponent implements OnInit {
   productoId: number | null = null;
   isLoading: boolean = false;
   errorMessage: string = '';
-
-  constructor(
-    private productoService: ProductoService,
-    private router: Router,
-    private route: ActivatedRoute
-  ) {}
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');

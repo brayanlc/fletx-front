@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
@@ -12,6 +12,9 @@ import { RegisterRequest } from '../../models/user.model';
   styleUrl: './register.scss'
 })
 export class RegisterComponent {
+  private authService = inject(AuthService);
+  private router = inject(Router);
+
   registerData: RegisterRequest = {
     email: '',
     password: '',
@@ -20,11 +23,6 @@ export class RegisterComponent {
   confirmPassword: string = '';
   errorMessage: string = '';
   isLoading: boolean = false;
-
-  constructor(
-    private authService: AuthService,
-    private router: Router
-  ) {}
 
   onSubmit(): void {
     this.isLoading = true;
