@@ -10,36 +10,25 @@ import { AuthService } from './auth.service';
 export class ProductoService {
   private apiUrl = 'http://localhost:3000/api/productos';
 
-  constructor(
-    private http: HttpClient,
-    private authService: AuthService
-  ) {}
-
-  private getHeaders(): HttpHeaders {
-    const token = this.authService.getToken();
-    return new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    });
-  }
+  constructor(private http: HttpClient) {}
 
   getAll(): Observable<Producto[]> {
-    return this.http.get<Producto[]>(this.apiUrl, { headers: this.getHeaders() });
+    return this.http.get<Producto[]>(this.apiUrl);
   }
 
   getById(id: number): Observable<Producto> {
-    return this.http.get<Producto>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });
+    return this.http.get<Producto>(`${this.apiUrl}/${id}`);
   }
 
   create(producto: CreateProductoRequest): Observable<Producto> {
-    return this.http.post<Producto>(this.apiUrl, producto, { headers: this.getHeaders() });
+    return this.http.post<Producto>(this.apiUrl, producto);
   }
 
   update(id: number, producto: UpdateProductoRequest): Observable<Producto> {
-    return this.http.put<Producto>(`${this.apiUrl}/${id}`, producto, { headers: this.getHeaders() });
+    return this.http.put<Producto>(`${this.apiUrl}/${id}`, producto);
   }
 
   delete(id: number): Observable<{message: string}> {
-    return this.http.delete<{message: string}>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });
+    return this.http.delete<{message: string}>(`${this.apiUrl}/${id}`);
   }
 }
