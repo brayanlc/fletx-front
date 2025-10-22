@@ -15,11 +15,8 @@ export class AuthService {
   public currentUser$ = this.currentUserSubject.asObservable();
 
   constructor() {
-    // Verificar si hay token guardado al inicializar
     const token = localStorage.getItem('token');
     if (token) {
-      // En una app real, verificarías el token con el backend
-      // Por ahora, solo lo guardamos
     }
   }
 
