@@ -1,0 +1,68 @@
+<div class="productos-container">
+  <header class="header">
+    <div class="header-content">
+      <h1>Gestión de Productos</h1>
+      <div class="user-info">
+        <span>Bienvenido, {{ currentUser?.nombre }}</span>
+        <button (click)="logout()" class="btn btn-secondary">Cerrar Sesión</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="actions-bar">
+      <button routerLink="/productos/nuevo" class="btn btn-primary">
+        + Nuevo Producto
+      </button>
+    </div>
+
+    <div *ngIf="isLoading" class="loading">
+      <div class="spinner"></div>
+      <p>Cargando productos...</p>
+    </div>
+
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+
+    <div *ngIf="!isLoading && !errorMessage" class="productos-grid">
+      <div *ngFor="let producto of productos" class="producto-card">
+        <div class="producto-header">
+          <h3>{{ producto.nombre }}</h3>
+          <div class="producto-actions">
+            <button 
+              (click)="deleteProducto(producto.id)" 
+              class="btn btn-danger btn-sm"
+            >
+              Eliminar
+            </button>
+          </div>
+        </div>
+        
+        <div class="producto-body">
+          <p class="descripcion">{{ producto.descripcion }}</p>
+          <div class="producto-details">
+            <div class="detail">
+              <span class="label">Precio:</span>
+              <span class="value">${{ producto.precio | number:'1.2-2' }}</span>
+            </div>
+            <div class="detail">
+              <span class="label">Stock:</span>
+              <span class="value" [class.low-stock]="producto.stock < 10">
+                {{ producto.stock }} unidades
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="productos.length === 0" class="empty-state">
+        <h3>No hay productos</h3>
+        <p>Comienza agregando tu primer producto</p>
+        <button routerLink="/productos/nuevo" class="btn btn-primary">
+          + Agregar Producto
+        </button>
+      </div>
+    </div>
+  </main>
+</div>
