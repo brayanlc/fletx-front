@@ -5,109 +5,137 @@
       <button (click)="cancel()" class="btn btn-secondary">← Volver</button>
     </div>
 
-    <div *ngIf="isLoading && isEdit" class="loading">
-      <div class="spinner"></div>
-      <p>Cargando producto...</p>
-    </div>
-
-    <form *ngIf="!isLoading || !isEdit" (ngSubmit)="onSubmit()" #productoForm="ngForm">
-      <div class="form-group">
-        <label for="nombre">Nombre del Producto:</label>
-        <input 
-          type="text" 
-          id="nombre" 
-          name="nombre"
-          [(ngModel)]="producto.nombre" 
-          required 
-          minlength="2"
-          #nombre="ngModel"
-          [class.error]="nombre.invalid && nombre.touched"
-        >
-        <div *ngIf="nombre.invalid && nombre.touched" class="error-message">
-          <span *ngIf="nombre.errors?.['required']">Nombre es requerido</span>
-          <span *ngIf="nombre.errors?.['minlength']">Mínimo 2 caracteres</span>
-        </div>
+    @if (isLoading && isEdit) {
+      <div class="loading">
+        <div class="spinner"></div>
+        <p>Cargando producto...</p>
       </div>
+    }
 
-      <div class="form-group">
-        <label for="descripcion">Descripción:</label>
-        <textarea 
-          id="descripcion" 
-          name="descripcion"
-          [(ngModel)]="producto.descripcion" 
-          required 
-          minlength="10"
-          rows="3"
-          #descripcion="ngModel"
-          [class.error]="descripcion.invalid && descripcion.touched"
-        ></textarea>
-        <div *ngIf="descripcion.invalid && descripcion.touched" class="error-message">
-          <span *ngIf="descripcion.errors?.['required']">Descripción es requerida</span>
-          <span *ngIf="descripcion.errors?.['minlength']">Mínimo 10 caracteres</span>
-        </div>
-      </div>
-
-      <div class="form-row">
+    @if (!isLoading || !isEdit) {
+      <form (ngSubmit)="onSubmit()" #productoForm="ngForm">
         <div class="form-group">
-          <label for="precio">Precio ($):</label>
-          <input 
-            type="number" 
-            id="precio" 
-            name="precio"
-            [(ngModel)]="producto.precio" 
-            required 
-            min="0"
-            step="0.01"
-            #precio="ngModel"
-            [class.error]="precio.invalid && precio.touched"
-          >
-          <div *ngIf="precio.invalid && precio.touched" class="error-message">
-            <span *ngIf="precio.errors?.['required']">Precio es requerido</span>
-            <span *ngIf="precio.errors?.['min']">Precio debe ser mayor a 0</span>
+          <label for="nombre">Nombre del Producto:</label>
+          <input
+            type="text"
+            id="nombre"
+            name="nombre"
+            [(ngModel)]="producto.nombre"
+            required
+            minlength="2"
+            #nombre="ngModel"
+            [class.error]="nombre.invalid && nombre.touched"
+            >
+          @if (nombre.invalid && nombre.touched) {
+            <div class="error-message">
+              @if (nombre.errors?.['required']) {
+                <span>Nombre es requerido</span>
+              }
+              @if (nombre.errors?.['minlength']) {
+                <span>Mínimo 2 caracteres</span>
+              }
+            </div>
+          }
+        </div>
+        <div class="form-group">
+          <label for="descripcion">Descripción:</label>
+          <textarea
+            id="descripcion"
+            name="descripcion"
+            [(ngModel)]="producto.descripcion"
+            required
+            minlength="10"
+            rows="3"
+            #descripcion="ngModel"
+            [class.error]="descripcion.invalid && descripcion.touched"
+          ></textarea>
+          @if (descripcion.invalid && descripcion.touched) {
+            <div class="error-message">
+              @if (descripcion.errors?.['required']) {
+                <span>Descripción es requerida</span>
+              }
+              @if (descripcion.errors?.['minlength']) {
+                <span>Mínimo 10 caracteres</span>
+              }
+            </div>
+          }
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="precio">Precio ($):</label>
+            <input
+              type="number"
+              id="precio"
+              name="precio"
+              [(ngModel)]="producto.precio"
+              required
+              min="0"
+              step="0.01"
+              #precio="ngModel"
+              [class.error]="precio.invalid && precio.touched"
+              >
+            @if (precio.invalid && precio.touched) {
+              <div class="error-message">
+                @if (precio.errors?.['required']) {
+                  <span>Precio es requerido</span>
+                }
+                @if (precio.errors?.['min']) {
+                  <span>Precio debe ser mayor a 0</span>
+                }
+              </div>
+            }
+          </div>
+          <div class="form-group">
+            <label for="stock">Stock:</label>
+            <input
+              type="number"
+              id="stock"
+              name="stock"
+              [(ngModel)]="producto.stock"
+              required
+              min="0"
+              #stock="ngModel"
+              [class.error]="stock.invalid && stock.touched"
+              >
+            @if (stock.invalid && stock.touched) {
+              <div class="error-message">
+                @if (stock.errors?.['required']) {
+                  <span>Stock es requerido</span>
+                }
+                @if (stock.errors?.['min']) {
+                  <span>Stock debe ser mayor o igual a 0</span>
+                }
+              </div>
+            }
           </div>
         </div>
-
-        <div class="form-group">
-          <label for="stock">Stock:</label>
-          <input 
-            type="number" 
-            id="stock" 
-            name="stock"
-            [(ngModel)]="producto.stock" 
-            required 
-            min="0"
-            #stock="ngModel"
-            [class.error]="stock.invalid && stock.touched"
-          >
-          <div *ngIf="stock.invalid && stock.touched" class="error-message">
-            <span *ngIf="stock.errors?.['required']">Stock es requerido</span>
-            <span *ngIf="stock.errors?.['min']">Stock debe ser mayor o igual a 0</span>
+        @if (errorMessage) {
+          <div class="error-message global-error">
+            {{ errorMessage }}
           </div>
+        }
+        <div class="form-actions">
+          <button
+            type="submit"
+            [disabled]="productoForm.invalid || isLoading"
+            class="btn btn-primary"
+            >
+            @if (isLoading) {
+              <span>{{ isEdit ? 'Actualizando...' : 'Creando...' }}</span>
+            }
+            @if (!isLoading) {
+              <span>{{ isEdit ? 'Actualizar Producto' : 'Crear Producto' }}</span>
+            }
+          </button>
+          <button
+            type="button"
+            (click)="cancel()"
+            class="btn btn-secondary"
+            >
+            Cancelar
+          </button>
         </div>
-      </div>
-
-      <div *ngIf="errorMessage" class="error-message global-error">
-        {{ errorMessage }}
-      </div>
-
-      <div class="form-actions">
-        <button 
-          type="submit" 
-          [disabled]="productoForm.invalid || isLoading"
-          class="btn btn-primary"
-        >
-          <span *ngIf="isLoading">{{ isEdit ? 'Actualizando...' : 'Creando...' }}</span>
-          <span *ngIf="!isLoading">{{ isEdit ? 'Actualizar Producto' : 'Crear Producto' }}</span>
-        </button>
-        
-        <button 
-          type="button" 
-          (click)="cancel()" 
-          class="btn btn-secondary"
-        >
-          Cancelar
-        </button>
-      </div>
-    </form>
+      </form>
+    }
   </div>
 </div>

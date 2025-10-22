@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterModule } from '@angular/router';
 import { ProductoService } from '../../services/producto.service';
@@ -7,7 +7,7 @@ import { Producto, CreateProductoRequest, UpdateProductoRequest } from '../../mo
 
 @Component({
   selector: 'app-producto-form',
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [FormsModule, RouterModule],
   templateUrl: './producto-form.html',
   styleUrl: './producto-form.scss'
 })
