@@ -1,1 +1,78 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* ===== ESTILOS GLOBALES DE BOTONES ===== */
+.btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  &:hover:not(:disabled) {
+    transform: translateY(-1px);
+  }
+}
+
+/* Variantes de botones */
+.btn-primary {
+  background: #007bff;
+  color: white;
+
+  &:hover:not(:disabled) {
+    background: #0056b3;
+  }
+}
+
+.btn-secondary {
+  background: #6c757d;
+  color: white;
+
+  &:hover:not(:disabled) {
+    background: #545b62;
+  }
+}
+
+.btn-danger {
+  background: #dc3545;
+  color: white;
+
+  &:hover:not(:disabled) {
+    background: #c82333;
+  }
+}
+
+.btn-success {
+  background: #28a745;
+  color: white;
+
+  &:hover:not(:disabled) {
+    background: #1e7e34;
+  }
+}
+
+/* Tamaños de botones */
+.btn-sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+}
+
+.btn-lg {
+  padding: 1rem 2rem;
+  font-size: 1.125rem;
+}
+
+/* Botón de ancho completo */
+.btn-block {
+  width: 100%;
+}
