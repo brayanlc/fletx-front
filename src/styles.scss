@@ -76,3 +76,21 @@
 .btn-block {
   width: 100%;
 }
+
+/* ===== ESTILOS GLOBALES DE ENLACES ===== */
+.link {
+  color: #007bff;
+  text-decoration: none;
+  transition: all 0.2s ease;
+
+  &:hover {
+    text-decoration: underline;
+    color: #0056b3;
+  }
+}
+
+/* Enlaces centrados */
+.link-center {
+  text-align: center;
+  margin-top: 1rem;
+}
