@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { ProductoService } from '../../services/producto.service';
 import { AuthService } from '../../services/auth.service';
 import { Producto } from '../../models/producto.model';
 
 @Component({
   selector: 'app-productos',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './productos.html',
   styleUrl: './productos.scss'
 })
