@@ -37,6 +37,12 @@
               <h3>{{ producto.nombre }}</h3>
               <div class="producto-actions">
                 <button
+                  routerLink="/productos/editar/{{ producto.id }}"
+                  class="btn btn-primary btn-sm"
+                  >
+                  Editar
+                </button>
+                <button
                   (click)="deleteProducto(producto.id)"
                   class="btn btn-danger btn-sm"
                   >
